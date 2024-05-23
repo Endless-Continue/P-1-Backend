@@ -5,7 +5,7 @@ const servidor = express();
 
 servidor.get("/", (solicitud, respuesta) => {
   respuesta.json({
-    saludo: "Hola",
+    saludo: "Hola, Buenas noches",
   });
 });
 servidor.get("/xxx", (solicitud, respuesta) => {
@@ -14,4 +14,4 @@ servidor.get("/xxx", (solicitud, respuesta) => {
   });
 });
 servidor.listen(3000);
-console.log("servidor corriendo en el pueto 3000");
+console.log("servidor corriendo en el puerto 3000");
