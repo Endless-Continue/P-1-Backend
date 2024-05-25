@@ -8,7 +8,8 @@ import enrutadorUsuarios from "./rutas/rutausuarios.js";
 
 //Creando el servidores de express
 const servidor = express();
-
+//haciendo que el servidor use express.json para que lleguen los datos en json de postman
+servidor.use(express.json());
 //usar rutas que vienen de rutausuarios.js
 servidor.use("/usuarios", enrutadorUsuarios);
 
