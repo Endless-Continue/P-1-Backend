@@ -12,6 +12,8 @@ enrutadorProducts.get("/", productsManagement.FindProducts);
 
 enrutadorProducts.get("/:id", productsManagement.FindProduct);
 
+enrutadorProducts.get("/search/:query", productsManagement.FindProductsByName);
+
 enrutadorProducts.put("/:id", productsManagement.UpdateProduct);
 
 enrutadorProducts.post("/", productsManagement.CreateProduct);

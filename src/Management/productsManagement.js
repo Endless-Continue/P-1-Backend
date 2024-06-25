@@ -1,23 +1,47 @@
+import fs from "fs-extra";
+import multer from "multer";
 import modeloProducts from "../modelos/modeloProducts.js";
 
 const productsManagement = {
   CreateProduct: async (req, res) => {
-    try {
-      const newProduct = new modeloProducts(req.body);
-      const productCreated = await newProduct.save();
-      if (newProduct._id) {
+    const productStorage = multer.diskStorage({
+      destination: "productsSrc",
+      filename: (res, file, cb) => {
+        cb(null, file.originalname);
+      },
+    });
+    const upload = multer({ storage: productStorage }).single("img");
+    upload(req, res, async (error) => {
+      if (error) {
         res.json({
-          resultado: "Works!",
-          mensaje: "Product Created!",
-          datos: productCreated._id,
+          answer: "Error!, There's an error uploading the img of tge product",
+          error: error,
         });
+      } else {
+        const newProduct = new modeloProducts({
+          product: req.body.product,
+          brand: req.body.brand,
+          brandType: req.body.brandType,
+          img: req.file.filename,
+          price: req.body.price,
+          description: req.body.description,
+          ingredients: req.body.ingredients,
+          activeIngredients: req.body.activeIngredients,
+          volume: req.body.volume,
+          neto: req.body.neto,
+          productAmount: req.body.productAmount,
+          productType: req.body.productType,
+          available: req.body.available,
+        });
+        const productCreated = await newProduct.save();
+        if (productCreated._id) {
+          res.json({
+            answer: "Great!, the product has been created!",
+            product: productCreated._id,
+          });
+        }
       }
-    } catch (error) {
-      res.json({
-        error: true,
-        mensaje: "error , there's an issue in the sign up of the product",
-      });
-    }
+    });
   },
   FindProduct: async (req, res) => {
     try {
@@ -35,14 +59,24 @@ const productsManagement = {
       });
     }
   },
+  FindProductsByName: async (req, res) => {
+    try {
+      const productfindedbyname = await modeloProducts.find({
+        product: new RegExp(req.params.query, "i"),
+      });
+      res.json(productfindedbyname);
+    } catch (error) {
+      res.json({
+        error: true,
+        mensaje: "error , there's an issue finding your product",
+      });
+    }
+  },
   FindProducts: async (req, res) => {
     try {
       const allProducts = await modeloProducts.find();
       console.log(allProducts);
-      res.json({
-        answer: "get all products works",
-        products: allProducts,
-      });
+      res.json(allProducts);
     } catch (error) {
       res.json({
         error: true,
@@ -74,10 +108,13 @@ const productsManagement = {
       const productDeleted = await modeloProducts.findByIdAndDelete(
         req.params.id
       );
-      res.json({
-        id: req.params.id,
-        answer: "Product deleted",
-      });
+      if (productDeleted._id) {
+        await fs.unlink("productsSrc/" + productDeleted.img);
+        res.json({
+          id: req.params.id,
+          answer: "Product deleted",
+        });
+      }
     } catch (error) {
       res.json({
         error: true,
