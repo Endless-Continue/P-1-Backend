@@ -25,7 +25,9 @@ Esta es una API publica para sus database's, en caso de querer utilizarla deben 
 
 ## Endpoints
 
-Para usar la api para sus database's, deberan usarla de esta manera
+### Products
+
+Para usar el crud de productos, se usan los siguientes endpoints:
 
 - `POST /products`: Crear producto.
 - `GET /products/:id`: Obten informacion de un producto por su id.
@@ -33,11 +35,22 @@ Para usar la api para sus database's, deberan usarla de esta manera
 - `PUT /products/:id`: Actualizar un producto.
 - `DELETE /products/:id`: Elimina un producto.
 
+### Users
+
+Para usar el crud de users, se usan los siguientes endpoints
+
+- `POST /register`: Crear user.
+- `GET /users/:id`: Obten informacion de un producto por su id.
+- `GET /users`: Obtener informacion de todos los productos de la database.
+- `PUT /users/:id`: Actualizar un producto.
+- `DELETE /users/:id`: Elimina un producto.
+- `GET /log-in/:token`: Para iniciar sesion con el usuario, y verificar su token.
+
 ## DataBase
 
 La base de datos utilizada es:
 
-- Mongodb
+- Mongodb Atlas
 
 ## Dependencias
 
@@ -45,6 +58,11 @@ La base de datos utilizada es:
 - Node.js
 - Mongoose
 - Dotenv
+- Multer
+- Fs-extra
+- Cors
+- Bycryptjs
+- JsonWebToken
 
 ## Dev-Dependencias
 
