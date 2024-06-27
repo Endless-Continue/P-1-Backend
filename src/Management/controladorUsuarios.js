@@ -4,38 +4,48 @@ import ModeloUsuario from "../modelos/modeloUsuario.js";
 const ControladorUsuarios = {
   crearUsuario: async (solicitud, respuesta) => {
     try {
-      const { fName, lName, email, password, cPassword } = solicitud.body;
-      const passwordProtegida = await bcrypt.hash(password, 10);
-      const cPasswordProtegida = await bcrypt.hash(cPassword, 10);
-      const nuevoUsuario = new ModeloUsuario({
-        fName,
-        lName,
-        email,
-        password: passwordProtegida,
-        cPassword: cPasswordProtegida,
-      });
-      const emailFound = await ModeloUsuario.findOne({
-        email: email,
-      });
-      if (!emailFound) {
-        const usuarioCreado = await nuevoUsuario.save();
-        if (usuarioCreado._id) {
+      const { fName, lName, email } = solicitud.body;
+      const contra = solicitud.body.password;
+      const cContra = solicitud.body.cPassword;
+      if (contra == cContra) {
+        const passwordProtegida = await bcrypt.hash(contra, 10);
+        const cPasswordProtegida = await bcrypt.hash(cContra, 10);
+        const nuevoUsuario = new ModeloUsuario({
+          fName,
+          lName,
+          email,
+          password: passwordProtegida,
+          cPassword: cPasswordProtegida,
+        });
+
+        const emailFound = await ModeloUsuario.findOne({
+          email: email,
+        });
+        if (!emailFound) {
+          const usuarioCreado = await nuevoUsuario.save();
+          if (usuarioCreado._id) {
+            respuesta.json({
+              resultado: "bien",
+              mensaje: "User Created",
+              datos: usuarioCreado._id,
+            });
+          }
+        } else {
           respuesta.json({
-            resultado: "bien",
-            mensaje: "usuario creado",
-            datos: usuarioCreado._id,
+            resultado: "mal",
+            mensaje: "There's already an user with this email",
           });
         }
       } else {
         respuesta.json({
-          resultado: "mal",
-          mensaje: "ya existe un usuario con este email",
+          resultdo: "mal",
+          mensaje: "The password and confirm password doesn't match",
         });
       }
     } catch (error) {
       respuesta.json({
         resultado: "mal",
-        mensaje: "ocurrió un error al crear usuario",
+        mensaje: "There's an error creating the user",
         datos: error,
       });
       console.log(error);
@@ -49,14 +59,14 @@ const ControladorUsuarios = {
       if (usuarioEncontrado._id) {
         respuesta.json({
           resultado: "bien",
-          mensaje: "usuario leído",
+          mensaje: "User Readed",
           datos: usuarioEncontrado,
         });
       }
     } catch (error) {
       respuesta.json({
         resultado: "mal",
-        mensaje: "ocurrió un error al leer usuario",
+        mensaje: "There's an issue finding the user",
         datos: error,
       });
     }
@@ -66,34 +76,59 @@ const ControladorUsuarios = {
       const todosLosUsuarios = await ModeloUsuario.find();
       respuesta.json({
         resultado: "bien",
-        mensaje: "usuarios leídos",
+        mensaje: "All users readed",
         datos: todosLosUsuarios,
       });
     } catch (error) {
       respuesta.json({
         resultado: "mal",
-        mensaje: "ocurrió un error al leer todos los usuarios",
+        mensaje: "There's an issue finding all users",
         datos: error,
       });
     }
   },
   actualizarUsuario: async (solicitud, respuesta) => {
     try {
-      const usuarioActualizado = await ModeloUsuario.findByIdAndUpdate(
-        solicitud.params.id,
-        solicitud.body
-      );
-      if (usuarioActualizado._id) {
+      const { fName, lName, email } = solicitud.body;
+      const contra = solicitud.body.password;
+      const cContra = solicitud.body.cPassword;
+      if (contra == cContra) {
+        const passwordProtegida = await bcrypt.hash(contra, 10);
+        const cPasswordProtegida = await bcrypt.hash(cContra, 10);
+        const usuarioActualizado = await ModeloUsuario.findByIdAndUpdate(
+          solicitud.params.id,
+          {
+            fName,
+            lName,
+            email,
+            password: passwordProtegida,
+            cPassword: cPasswordProtegida,
+          }
+        );
+        if (usuarioActualizado._id) {
+          respuesta.json({
+            resultado: "bien",
+            mensaje: "User updated",
+            datos: usuarioActualizado._id,
+          });
+        } else {
+          respuesta.json({
+            resultado: "mal",
+            mensaje: "There's an issue",
+            datos: error,
+          });
+        }
+      } else {
         respuesta.json({
-          resultado: "bien",
-          mensaje: "usuario actualizado",
-          datos: usuarioActualizado._id,
+          resultado: "mal",
+          mensaje: "There's an issue with the credentials",
+          datos: error,
         });
       }
     } catch (error) {
       respuesta.json({
         resultado: "mal",
-        mensaje: "ocurrió un error al actualizar usuario",
+        mensaje: "There's an issue updating the user",
         datos: error,
       });
     }
@@ -106,14 +141,14 @@ const ControladorUsuarios = {
       if (usuarioEliminado._id) {
         respuesta.json({
           resultado: "bien",
-          mensaje: "usuario eliminado",
+          mensaje: "User Deleted",
           datos: null,
         });
       }
     } catch (error) {
       respuesta.json({
         resultado: "mal",
-        mensaje: "ocurrió un error al eliminar usuario",
+        mensaje: "There's an issue trying to delete the user",
         datos: error,
       });
     }

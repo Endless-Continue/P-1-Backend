@@ -48,13 +48,14 @@ const productsManagement = {
       const productfinded = await modeloProducts.findById(req.params.id);
       if (productfinded._id) {
         res.json({
-          answer: "product finded",
+          respuesta: "bien",
+          mensaje: "Product finded",
           product: productfinded,
         });
       }
     } catch (error) {
       res.json({
-        error: true,
+        respuesta: "mal",
         mensaje: "error , there's an issue finding the product",
       });
     }
@@ -67,8 +68,8 @@ const productsManagement = {
       res.json(productfindedbyname);
     } catch (error) {
       res.json({
-        error: true,
-        mensaje: "error , there's an issue finding your product",
+        respuesta: "mal",
+        mensaje: "There's an issue finding the product by name",
       });
     }
   },
@@ -76,11 +77,15 @@ const productsManagement = {
     try {
       const allProducts = await modeloProducts.find();
       console.log(allProducts);
-      res.json(allProducts);
+      res.json({
+        respuesta: "bien",
+        mensaje: "All Products found",
+        datos: allProducts,
+      });
     } catch (error) {
       res.json({
-        error: true,
-        mensaje: "error , there's an issue finding all products",
+        respuesta: "mal",
+        mensaje: "There's an issue finding all the products",
       });
     }
   },
@@ -92,14 +97,15 @@ const productsManagement = {
       );
       if (updateProduct._id) {
         res.json({
-          mensaje: "update works",
+          respuesta: "bien",
+          mensaje: "Product Updated",
           productUpdated: updateProduct._id,
         });
       }
     } catch (error) {
       res.json({
-        error: true,
-        mensaje: "error , there's an issue updating the product",
+        respuesta: "mal",
+        mensaje: "There's an issue updating the product",
       });
     }
   },
@@ -111,14 +117,15 @@ const productsManagement = {
       if (productDeleted._id) {
         await fs.unlink("productsSrc/" + productDeleted.img);
         res.json({
-          id: req.params.id,
-          answer: "Product deleted",
+          respuesta: "bien",
+          mensaje: "Product deleted",
+          productUpdated: productDeleted._id,
         });
       }
     } catch (error) {
       res.json({
-        error: true,
-        mensaje: "error , there's an issue deleting the product",
+        respuesta: "mal",
+        mensaje: "There's an issue deleting the product",
       });
     }
   },

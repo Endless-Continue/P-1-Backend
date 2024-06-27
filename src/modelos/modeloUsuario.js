@@ -6,6 +6,7 @@ const esquemaUsuario = new Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   cPassword: { type: String, required: true },
+  address: { type: String },
 });
 
 export default model("Usuario", esquemaUsuario);

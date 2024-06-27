@@ -24,10 +24,3 @@ export function verificarToken(token) {
     });
   });
 }
-
-/* export function verificarEmail(){
-  const { fName, lName, email, password, cPassword } = solicitud.body;
-  emailFound = await ModeloUsuario.findOne({
-    email: email
-  })
-} */

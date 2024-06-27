@@ -18,23 +18,25 @@ const ControladorInicioSesion = {
           id: usuarioEncontrado._id,
           fNombre: usuarioEncontrado.fName,
           lNombre: usuarioEncontrado.lName,
+          mail: usuarioEncontrado.email,
+          direccion: usuarioEncontrado.address,
         });
         respuesta.json({
           resultado: "bien",
-          mensaje: "acceso permitido",
+          mensaje: "Log in Success",
           datos: token,
         });
       } else {
         respuesta.json({
           resultado: "mal",
-          mensaje: "acceso denegado",
+          mensaje: "Access denied",
           datos: null,
         });
       }
     } catch (error) {
       respuesta.json({
         resultado: "mal",
-        mensaje: "ocurrió un error al iniciar sesión",
+        mensaje: "There's an issue loging in",
         datos: error,
       });
     }
@@ -46,20 +48,20 @@ const ControladorInicioSesion = {
       if (decodificado.id) {
         respuesta.json({
           resultado: "bien",
-          mensaje: "token válido",
+          mensaje: "Token verified",
           datos: decodificado,
         });
       } else {
         respuesta.json({
           resultado: "mal",
-          mensaje: "token no válido",
+          mensaje: "Unknown token",
           datos: null,
         });
       }
     } catch (error) {
       respuesta.json({
         resultado: "mal",
-        mensaje: "ocurrió un error al validar token",
+        mensaje: "There's an error verifying the token",
         datos: error,
       });
     }

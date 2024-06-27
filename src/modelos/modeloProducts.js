@@ -10,7 +10,6 @@ const userSchema = new Schema(
     description: { type: String, required: true },
     ingredients: { type: String, required: true },
     activeIngredients: { type: String },
-    volume: { type: String },
     neto: { type: String },
     productAmount: { type: Number, required: true },
     productType: { type: String, required: true },
