@@ -15,6 +15,9 @@ const ControladorInicioSesion = {
       );
       if (contraseniaValidada) {
         const token = await generarToken({
+          country: usuarioEncontrado.country,
+          city: usuarioEncontrado.city,
+          phone: usuarioEncontrado.phoneNum,
           id: usuarioEncontrado._id,
           fNombre: usuarioEncontrado.fName,
           lNombre: usuarioEncontrado.lName,

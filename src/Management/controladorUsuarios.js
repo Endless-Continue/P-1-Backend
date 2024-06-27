@@ -89,7 +89,8 @@ const ControladorUsuarios = {
   },
   actualizarUsuario: async (solicitud, respuesta) => {
     try {
-      const { fName, lName, email } = solicitud.body;
+      const { fName, lName, email, address, phoneNum, country, city } =
+        solicitud.body;
       const contra = solicitud.body.password;
       const cContra = solicitud.body.cPassword;
       if (contra == cContra) {
@@ -103,6 +104,10 @@ const ControladorUsuarios = {
             email,
             password: passwordProtegida,
             cPassword: cPasswordProtegida,
+            address,
+            phoneNum,
+            country,
+            city,
           }
         );
         if (usuarioActualizado._id) {

@@ -1,6 +1,6 @@
-# P-Backend
+# P-Backend-Relef
 
-En este proyecto de crear mi primera api, usaremos frameworks con base a JavaScript para asi poder crear un servidor local, en el cual vamos a implementar las funciones basicas de un servidor backend, las cuales son CRUD (Create, Read, Update, Delete), esto implica la creacion de rutas, controladores y modelos que nos ayudaran a llevar la creacion del API a un nivel mucho mas organizado.
+En este proyecto usaremos mi primera api, y la mejoraremos hasta hacerla una base de datos funcional, con un crud lo mas excepcional, con verificaciones de contraseña, de si existe o no un gmail en el register, todo esto intentando ser lo mas organizado posible y hecho a base de controladores.
 
 ## Procedimiento
 
@@ -51,8 +51,17 @@ La base de datos utilizada es:
 - Nodemon
 - Morgan
 
-## Devs:
+### Frontend
 
-_Endless-Continue_
+All our Frontend was done in conjunction with [Endless Izzy](https://github.com/Izzyyz) here all frontend [Relef Frontend](https://github.com/Izzyyz/Relef)
 
-Email: javiertorresarrieta01@gmail.com
+### License
+
+This project is licensed under the [Endless Continue](https://github.com/Endless-Continue) License.
+
+### Acknowledgments
+
+#### Contributors
+
+- [Endless Izzy](https://github.com/Izzyyz)
+- [Javier Andres](https://github.com/javierandres-dev)
