@@ -38,7 +38,7 @@ const ControladorUsuarios = {
         }
       } else {
         respuesta.json({
-          resultdo: "mal",
+          resultdo: "mal2",
           mensaje: "The password and confirm password doesn't match",
         });
       }
