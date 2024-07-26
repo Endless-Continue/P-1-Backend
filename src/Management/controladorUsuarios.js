@@ -30,15 +30,15 @@ const ControladorUsuarios = {
               datos: usuarioCreado._id,
             });
           }
-        } else {
+        } else if (!contra == !cContra) {
           respuesta.json({
-            resultado: "mal",
+            resultado: "mal2",
             mensaje: "There's already an user with this email",
           });
         }
       } else {
         respuesta.json({
-          resultdo: "mal2",
+          resultdo: "mal",
           mensaje: "The password and confirm password doesn't match",
         });
       }
